@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PassForge: gerador de senhas fortes com estilo cyberpunk." />
+  <title>PassForge // Gerador de Senhas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <main class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="PassForge, início">
+        <span class="brand-mark">P_</span>
+        <span>PASS<span>FORGE</span></span>
+      </a>
+      <span class="status"><i></i> SISTEMA ONLINE</span>
+    </header>
+
+    <section class="hero" id="top">
+      <p class="eyebrow">// SEGURANÇA NÃO É OPCIONAL</p>
+      <h1>Forje uma senha<br /><em>difícil de quebrar.</em></h1>
+      <p class="intro">Uma versão hacker do gerador de senhas da Alura, feita para criar combinações mais fortes em poucos segundos.</p>
+    </section>
+
+    <section class="generator-card" aria-label="Gerador de senhas">
+      <div class="card-head">
+        <div>
+          <p class="terminal-line">root@passforge:~$ <span>generate --secure</span></p>
+          <h2>Nova credencial</h2>
+        </div>
+        <span class="card-code">PF-01</span>
+      </div>
+
+      <div class="password-output">
+        <output id="password" aria-live="polite" aria-label="Senha gerada">C0d3_Ne0n!</output>
+        <button class="copy-button" id="copyButton" type="button" aria-label="Copiar senha" title="Copiar senha">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8V5.7C8 4.76 8.76 4 9.7 4h8.6c.94 0 1.7.76 1.7 1.7v8.6c0 .94-.76 1.7-1.7 1.7H16M5.7 8h8.6c.94 0 1.7.76 1.7 1.7v8.6c0 .94-.76 1.7-1.7 1.7H5.7c-.94 0-1.7-.76-1.7-1.7V9.7C4 8.76 4.76 8 5.7 8Z" /></svg>
+          <span id="copyText">COPIAR</span>
+        </button>
+      </div>
+
+      <div class="strength-row">
+        <span>Força da senha</span>
+        <div class="strength-meter" aria-label="Nível de força da senha">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <strong id="strengthLabel">MUITO FORTE</strong>
+      </div>
+
+      <div class="controls">
+        <div class="length-control">
+          <div class="control-label">
+            <label for="length">Comprimento</label>
+            <output id="lengthValue" for="length">12</output>
+          </div>
+          <input id="length" type="range" min="6" max="32" value="12" />
+          <div class="range-labels"><span>06</span><span>32</span></div>
+        </div>
+
+        <fieldset class="options">
+          <legend>Incluir no código</legend>
+          <label class="option"><input id="lowercase" type="checkbox" checked /><span class="fake-check"></span><span>abc <small>minúsculas</small></span></label>
+          <label class="option"><input id="uppercase" type="checkbox" checked /><span class="fake-check"></span><span>ABC <small>maiúsculas</small></span></label>
+          <label class="option"><input id="numbers" type="checkbox" checked /><span class="fake-check"></span><span>123 <small>números</small></span></label>
+          <label class="option"><input id="symbols" type="checkbox" checked /><span class="fake-check"></span><span>#@! <small>símbolos</small></span></label>
+        </fieldset>
+      </div>
+
+      <p class="warning" id="warning" role="alert"></p>
+      <button class="generate-button" id="generateButton" type="button">
+        <span>GERAR NOVA SENHA</span>
+        <span aria-hidden="true">↻</span>
+      </button>
+    </section>
+
+    <footer>
+      <span>PASSFORGE v1.0</span>
+      <span>feito no modo noturno_</span>
+    </footer>
+  </main>
+  <script src="main.js"></script>
+</body>
+</html>
