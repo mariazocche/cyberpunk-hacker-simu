@@ -229,4 +229,3 @@ $('#decoderInput').addEventListener('input', runDecoder);
 $('#decoderMode').addEventListener('change', runDecoder);
 setupTabs();
 setupVault();
-
