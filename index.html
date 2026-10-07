@@ -3,86 +3,112 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="PassForge: gerador de senhas fortes com estilo cyberpunk." />
+  <meta name="description" content="PassForge: gerador de senhas fortes com estética cyberpunk." />
   <title>PassForge // Gerador de Senhas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
-  <main class="page-shell">
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <section class="welcome-screen" id="welcomeScreen" aria-label="Tela de boas-vindas">
+    <div class="welcome-grid" aria-hidden="true"></div>
+    <div class="binary-rain" id="binaryRain" aria-hidden="true"></div>
+    <div class="welcome-content">
+      <div class="access-tag"><span class="pulse-dot"></span> conexão segura estabelecida</div>
+      <div class="hacker-art" aria-hidden="true">
+        <div class="hacker-aura"></div>
+        <svg class="skull-svg" viewBox="0 0 500 360" role="img" aria-label="Caveira desenhada com códigos verdes">
+          <defs><filter id="skullGlow"><feGaussianBlur stdDeviation="7" /></filter><linearGradient id="skullGreen" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d0ff9a" /><stop offset=".55" stop-color="#52ff70" /><stop offset="1" stop-color="#0b8e44" /></linearGradient></defs>
+          <path class="skull-aura" d="M116 191c0-91 59-153 137-153s137 62 137 153c0 56-28 92-68 114v39H185v-39c-41-22-69-58-69-114Z" />
+          <path class="skull-outline" d="M116 191c0-91 59-153 137-153s137 62 137 153c0 56-28 92-68 114v39H185v-39c-41-22-69-58-69-114Z" />
+          <path class="skull-jaw" d="M177 271v44h33v-25h22v25h23v-25h23v25h22v-25h23v25h34v-44" />
+          <path class="skull-eye" d="M145 179c18-30 52-41 84-23-6 47-28 70-60 61-15-5-24-18-24-38Z" />
+          <path class="skull-eye" d="M355 179c-18-30-52-41-84-23 6 47 28 70 60 61 15-5 24-18 24-38Z" />
+          <path class="skull-nose" d="M241 214l12 30h-20l-7-13 15-17Zm18 0-12 30h20l7-13-15-17Z" />
+          <path class="skull-teeth" d="M183 255c45 17 89 17 137 0v26c-46 16-91 16-137 0Z" />
+          <path class="skull-code" d="M132 95h36m164 0h36M120 118h18m224 0h18M127 142h24m198 0h24M121 230h35m188 0h35M151 300h35m128 0h35" />
+          <path class="skull-scan" d="M102 191h296" />
+          <text class="skull-text" x="176" y="108">0101</text><text class="skull-text" x="275" y="108">1010</text>
+          <text class="skull-text" x="166" y="328">M0RSE // 01001</text>
+        </svg>
+      </div>
+      <p class="welcome-kicker">PASSFORGE / ACESSO PRIVADO</p>
+      <h1>Bem-vindo,<br /><span>hacker.</span></h1>
+      <p class="welcome-copy">Entre no terminal e crie uma senha forte,<br />sem deixar rastros fáceis de seguir.</p>
+      <button class="start-button" id="startButton" type="button"><span>INICIAR ACESSO</span><b>↗</b></button>
+      <section class="challenge-panel" id="challengePanel" aria-label="Mini-jogo de decodificação" hidden>
+        <div class="challenge-top"><span class="section-label"><span>00</span> FIREWALL DE ENTRADA</span><span class="challenge-status" id="challengeStatus">BLOQUEADO</span></div>
+        <h2>Decodifique para entrar.</h2>
+        <p>Resolva o código abaixo. Alternar entre Morse e binário muda o desafio.</p>
+        <div class="challenge-code" id="challengeCode">--. .</div>
+        <div class="challenge-controls"><div class="challenge-modes"><label><input type="radio" name="challengeMode" value="morse" checked /> MORSE</label><label><input type="radio" name="challengeMode" value="binary" /> BINÁRIO</label></div><input id="challengeAnswer" type="text" autocomplete="off" placeholder="digite a resposta" aria-label="Resposta do desafio" /><button id="verifyChallenge" type="button">VALIDAR</button></div>
+        <small class="challenge-hint" id="challengeHint">Dica: no Morse, cada grupo representa uma letra.</small>
+      </section>
+      <div class="morse-line" aria-label="Código Morse decorativo">— · — · / ··· · —· / ·— ··· ··· · / —·· · / ··· · —· ··· ·</div>
+    </div>
+    <div class="welcome-footer"><span>ENCRYPTED // 256-BIT</span><span>v2.4.0</span></div>
+  </section>
+
+  <main class="app-shell" id="appShell" aria-hidden="true">
     <header class="topbar">
-      <a class="brand" href="#top" aria-label="PassForge, início">
-        <span class="brand-mark">P_</span>
-        <span>PASS<span>FORGE</span></span>
-      </a>
-      <span class="status"><i></i> SISTEMA ONLINE</span>
+      <a class="brand" href="#top" aria-label="PassForge, início"><span class="brand-mark">P_</span><span>PASS<span>FORGE</span></span></a>
+      <div class="topbar-meta"><span class="status"><i></i> SISTEMA ONLINE</span><button class="exit-button" id="exitButton" type="button">SAIR <span>×</span></button></div>
     </header>
 
+    <nav class="module-tabs" aria-label="Módulos do PassForge">
+      <button class="module-tab active" data-tab="generator" type="button"><span>01</span> GERADOR</button>
+      <button class="module-tab" data-tab="decoder" type="button"><span>02</span> DECODIFICADOR</button>
+      <button class="module-tab" data-tab="vault" type="button"><span>03</span> COFRE LOCAL</button>
+      <button class="module-tab" data-tab="protocol" type="button"><span>04</span> PROTOCOLO</button>
+    </nav>
+
+    <section class="tab-panel active" data-panel="generator">
     <section class="hero" id="top">
-      <p class="eyebrow">// SEGURANÇA NÃO É OPCIONAL</p>
-      <h1>Forje uma senha<br /><em>difícil de quebrar.</em></h1>
-      <p class="intro">Uma versão hacker do gerador de senhas da Alura, feita para criar combinações mais fortes em poucos segundos.</p>
+      <div><p class="eyebrow">// SEGURANÇA NÃO É OPCIONAL</p><h2>Forje uma senha<br /><em>difícil de quebrar.</em></h2><p class="intro">Uma senha forte é a primeira linha entre seus dados e o caos.</p></div>
+      <div class="hero-terminal"><span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span><p>root@passforge:~$ <b>status --secure</b></p><strong>ALL SYSTEMS NOMINAL</strong><small>última varredura: agora</small></div>
     </section>
 
-    <section class="generator-card" aria-label="Gerador de senhas">
-      <div class="card-head">
-        <div>
-          <p class="terminal-line">root@passforge:~$ <span>generate --secure</span></p>
-          <h2>Nova credencial</h2>
-        </div>
-        <span class="card-code">PF-01</span>
-      </div>
+    <section class="dashboard-grid" aria-label="Área de segurança">
+      <section class="generator-card" aria-label="Gerador de senhas">
+        <div class="card-head"><div><p class="terminal-line">root@passforge:~$ <span>generate --secure</span></p><h3>Nova credencial</h3></div><span class="card-code">PF-01</span></div>
+        <div class="password-output"><output id="password" aria-live="polite" aria-label="Senha gerada">C0d3_Ne0n!47x</output><button class="copy-button" id="copyButton" type="button" aria-label="Copiar senha" title="Copiar senha"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8V5.7C8 4.76 8.76 4 9.7 4h8.6c.94 0 1.7.76 1.7 1.7v8.6c0 .94-.76 1.7-1.7 1.7H16M5.7 8h8.6c.94 0 1.7.76 1.7 1.7v8.6c0 .94-.76 1.7-1.7 1.7H5.7c-.94 0-1.7-.76-1.7-1.7V9.7C4 8.76 4.76 8 5.7 8Z" /></svg><span id="copyText">COPIAR</span></button></div>
+        <div class="strength-row"><span>Força da senha</span><div class="strength-meter" aria-label="Nível de força da senha"><span></span><span></span><span></span><span></span></div><strong id="strengthLabel">MUITO FORTE</strong></div>
+        <div class="controls"><div class="length-control"><div class="control-label"><label for="length">Comprimento</label><output id="lengthValue" for="length">14</output></div><input id="length" type="range" min="6" max="32" value="14" /><div class="range-labels"><span>06</span><span>32</span></div></div><fieldset class="options"><legend>Incluir no código</legend><label class="option"><input id="lowercase" type="checkbox" checked /><span class="fake-check"></span><span>abc <small>minúsculas</small></span></label><label class="option"><input id="uppercase" type="checkbox" checked /><span class="fake-check"></span><span>ABC <small>maiúsculas</small></span></label><label class="option"><input id="numbers" type="checkbox" checked /><span class="fake-check"></span><span>123 <small>números</small></span></label><label class="option"><input id="symbols" type="checkbox" checked /><span class="fake-check"></span><span>#@! <small>símbolos</small></span></label></fieldset></div>
+        <details class="advanced-panel"><summary><span>03</span> MODOS AVANÇADOS / CRIPTOGRAFIA LOCAL <b>+</b></summary><div class="advanced-grid"><label>modo<select id="generationMode"><option value="random">aleatório seguro</option><option value="passphrase">frase de acesso</option><option value="pin">PIN numérico</option><option value="hex">hexadecimal</option><option value="sha256">derivação SHA-256</option></select></label><label class="seed-field">frase-semente<input id="seedInput" type="text" placeholder="opcional para modos derivados" autocomplete="off" /></label><label>separador<select id="separator"><option value="-">hífen —</option><option value="_">sublinhado _</option><option value=".">ponto .</option><option value="">sem separador</option></select></label><label class="advanced-check"><input id="avoidAmbiguous" type="checkbox" checked /> evitar caracteres parecidos (O/0, l/1)</label></div><p class="advanced-note">A derivação SHA-256 acontece no seu navegador e não envia a semente para nenhum servidor.</p></details>
+        <p class="warning" id="warning" role="alert"></p><button class="generate-button" id="generateButton" type="button"><span>GERAR NOVA SENHA</span><span aria-hidden="true">↻</span></button>
+      </section>
 
-      <div class="password-output">
-        <output id="password" aria-live="polite" aria-label="Senha gerada">C0d3_Ne0n!</output>
-        <button class="copy-button" id="copyButton" type="button" aria-label="Copiar senha" title="Copiar senha">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8V5.7C8 4.76 8.76 4 9.7 4h8.6c.94 0 1.7.76 1.7 1.7v8.6c0 .94-.76 1.7-1.7 1.7H16M5.7 8h8.6c.94 0 1.7.76 1.7 1.7v8.6c0 .94-.76 1.7-1.7 1.7H5.7c-.94 0-1.7-.76-1.7-1.7V9.7C4 8.76 4.76 8 5.7 8Z" /></svg>
-          <span id="copyText">COPIAR</span>
-        </button>
-      </div>
-
-      <div class="strength-row">
-        <span>Força da senha</span>
-        <div class="strength-meter" aria-label="Nível de força da senha">
-          <span></span><span></span><span></span><span></span>
-        </div>
-        <strong id="strengthLabel">MUITO FORTE</strong>
-      </div>
-
-      <div class="controls">
-        <div class="length-control">
-          <div class="control-label">
-            <label for="length">Comprimento</label>
-            <output id="lengthValue" for="length">12</output>
-          </div>
-          <input id="length" type="range" min="6" max="32" value="12" />
-          <div class="range-labels"><span>06</span><span>32</span></div>
-        </div>
-
-        <fieldset class="options">
-          <legend>Incluir no código</legend>
-          <label class="option"><input id="lowercase" type="checkbox" checked /><span class="fake-check"></span><span>abc <small>minúsculas</small></span></label>
-          <label class="option"><input id="uppercase" type="checkbox" checked /><span class="fake-check"></span><span>ABC <small>maiúsculas</small></span></label>
-          <label class="option"><input id="numbers" type="checkbox" checked /><span class="fake-check"></span><span>123 <small>números</small></span></label>
-          <label class="option"><input id="symbols" type="checkbox" checked /><span class="fake-check"></span><span>#@! <small>símbolos</small></span></label>
-        </fieldset>
-      </div>
-
-      <p class="warning" id="warning" role="alert"></p>
-      <button class="generate-button" id="generateButton" type="button">
-        <span>GERAR NOVA SENHA</span>
-        <span aria-hidden="true">↻</span>
-      </button>
+      <aside class="side-column">
+        <section class="info-card"><div class="section-label"><span>01</span> DICA RÁPIDA</div><h3>Não reutilize<br /><em>suas chaves.</em></h3><p>Uma senha diferente para cada conta reduz o estrago quando um serviço é comprometido.</p><div class="tip-bar"><span></span><span></span><span></span><span></span><b>ZERO REUSO</b></div></section>
+        <section class="info-card telemetry-card"><div class="section-label"><span>02</span> TELEMETRIA</div><div class="telemetry-row"><span>entropia estimada</span><strong id="entropyValue">92 bits</strong></div><div class="telemetry-row"><span>combinações possíveis</span><strong id="combinationValue">1.2e+23</strong></div><div class="telemetry-row"><span>tempo p/ quebrar</span><strong class="green-text" id="crackTime">séculos</strong></div></section>
+      </aside>
     </section>
 
-    <footer>
-      <span>PASSFORGE v1.0</span>
-      <span>feito no modo noturno_</span>
-    </footer>
+    <section class="decoder-strip"><div class="decoder-title"><span class="live-dot"></span><div><span>TRANSMISSÃO LOCAL</span><small>mensagem criptografada</small></div></div><div class="decoded-message">··· · —· / ··· · —· / ·· —· —·· · / ·— / ··· · ·· —· ···</div><div class="binary-stream" id="binaryStream">01001000 01000001 01000011 01001011 01000101 01010010</div></section>
+    </section>
+
+    <section class="tab-panel" data-panel="decoder" hidden>
+      <div class="module-heading"><p class="eyebrow">// LEITURA DE SINAIS</p><h2>Decodifique<br /><em>sem deixar rastros.</em></h2><p>Converta mensagens rápidas entre texto, Morse e binário direto no navegador.</p></div>
+      <div class="module-card decoder-tool"><div class="tool-head"><span class="card-code">DEC-02</span><span class="live-dot"></span> PROCESSAMENTO LOCAL</div><textarea id="decoderInput" placeholder="Digite uma mensagem ou código..." spellcheck="false"></textarea><div class="decoder-actions"><select id="decoderMode"><option value="text-morse">Texto → Morse</option><option value="morse-text">Morse → Texto</option><option value="text-binary">Texto → Binário</option><option value="binary-text">Binário → Texto</option></select><button id="decodeButton" class="generate-button" type="button"><span>EXECUTAR CONVERSÃO</span><span>↯</span></button></div><output id="decoderOutput" class="decoder-output">aguardando entrada_</output></div>
+    </section>
+
+    <section class="tab-panel" data-panel="vault" hidden>
+      <div class="module-heading"><p class="eyebrow">// MEMÓRIA OFFLINE</p><h2>Seu cofre<br /><em>fica no seu dispositivo.</em></h2><p>Guarde uma anotação temporária nesta sessão. Nada é enviado para a rede.</p></div>
+      <div class="module-card vault-card"><div class="tool-head"><span class="card-code">VAULT-03</span><span>LOCAL STORAGE / ENCRYPTED UI</span></div><label class="vault-label" for="vaultNote">NOTA PRIVADA</label><textarea id="vaultNote" placeholder="Ex.: dica para lembrar uma senha, nome de serviço ou lembrete..." spellcheck="false"></textarea><div class="vault-actions"><button id="saveVault" class="generate-button" type="button"><span>GUARDAR NOTA LOCAL</span><span>↓</span></button><button id="clearVault" class="ghost-button" type="button">LIMPAR</button></div><p id="vaultStatus" class="advanced-note">nenhuma nota carregada_</p></div>
+    </section>
+
+    <section class="tab-panel" data-panel="protocol" hidden>
+      <div class="module-heading"><p class="eyebrow">// HIGIENE DIGITAL</p><h2>Protocolo<br /><em>de sobrevivência.</em></h2><p>Pequenas decisões que deixam sua vida online menos previsível.</p></div>
+      <div class="protocol-grid"><article class="module-card protocol-card"><span class="protocol-number">01</span><h3>Uma conta,<br />uma chave.</h3><p>Não reutilize senhas. Um vazamento não deve abrir todas as portas.</p></article><article class="module-card protocol-card"><span class="protocol-number">02</span><h3>Prefira frases<br />longas.</h3><p>Comprimento vence complexidade. Quatro palavras aleatórias são uma boa base.</p></article><article class="module-card protocol-card"><span class="protocol-number">03</span><h3>Ative o<br />segundo fator.</h3><p>Mesmo que a senha escape, uma camada extra ainda protege sua conta.</p></article></div>
+    </section>
+    <footer><span>PASSFORGE v2.4</span><span>feito no modo noturno_</span><span class="footer-morse">·— ··· / ·· —·</span></footer>
   </main>
+  <div class="toast" id="toast" role="status">Senha copiada para a área de transferência.</div>
   <script src="main.js"></script>
 </body>
 </html>
+
